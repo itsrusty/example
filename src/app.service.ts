@@ -12,6 +12,8 @@ export class AppService {
   }
 
   getDataInfor() {
+    console.log(this.gafete);
+    
     return this.gafete;
   }
 }
