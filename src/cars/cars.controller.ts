@@ -30,7 +30,10 @@ export class CarsController {
   }
 
   @Patch(':id')
-  updateCar(@Body() body: any) {
+  updateCar(
+    @Param('id', ParseIntPipe) id: number, 
+    @Body() body: any
+  ) {
     return body;
   }
 
@@ -41,17 +44,4 @@ export class CarsController {
       id,
     };
   }
-  //   @Get(':id')
-  //   getCarById( @Param('id') id ) {
-
-  // asi tomamos los values por id, esto es equivalente al req.params de expressJS
-
-  //     console.log(typeof id);
-
-  //     if (id == typeof String && id > 2) {
-  //         return 'no se puede'
-  //     }
-
-  //     return this.cars[id]
-  //   }
 }
