@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   ParseUUIDPipe,
@@ -14,6 +16,7 @@ import {
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
+import { Data } from './dto/data.dto';
 
 @Controller('cars')
 export class CarsController {
@@ -44,6 +47,12 @@ export class CarsController {
 
   @Delete(':id')
   deleteCar(@Param('id', ParseUUIDPipe) id: any) {
-    return this.carsService.delete(id)
+    return this.carsService.delete(id);
+  }
+
+  @Post('/de')
+  @HttpCode(HttpStatus.OK)
+  createDb(@Body() data: Data) {
+    return this.carsService.createInDB(data);
   }
 }

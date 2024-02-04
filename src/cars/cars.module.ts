@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CarsController } from './cars.controller';
 import { CarsService } from './cars.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Data, DataSchema } from './entities/data.entitie';
+import { DataS, DataSchema } from './entities/data.entitie';
 
 @Module({
   controllers: [CarsController],
@@ -10,7 +10,7 @@ import { Data, DataSchema } from './entities/data.entitie';
   imports: [
     MongooseModule.forFeature([
       {
-        name: Data.name,
+        name: DataS.name,
         schema: DataSchema,
       },
     ]),

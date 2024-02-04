@@ -1,10 +1,24 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Car } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto, UpdateCarDto } from './dto';
+import { Data } from './dto/data.dto';
+import { Model, Schema } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { DataS } from './entities/data.entitie';
 
 @Injectable()
 export class CarsService {
+  constructor(
+    @InjectModel(DataS.name)
+    private readonly dataModel: Model<DataS>,
+  ) {}
+
   private cars: Car[] = [
     {
       id: uuid(),
@@ -73,5 +87,22 @@ export class CarsService {
     this.cars = this.cars.filter((cars) => cars.id !== id);
 
     return;
+  }
+
+  async createInDB(data: Data) {
+    data.name = data.name.toLocaleLowerCase();
+    try {
+      const dataSend = await this.dataModel.create(data);
+
+      return dataSend;
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new BadRequestException(
+          `data sender exists in db ${JSON.stringify(error.keyValue)}`,
+        );
+      }
+      console.log(error);
+      throw new InternalServerErrorException(`can't create data, so sorry`);
+    }
   }
 }
