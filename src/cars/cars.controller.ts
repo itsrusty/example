@@ -16,7 +16,6 @@ import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
 
 @Controller('cars')
-// @UsePipes( ValidationPipe ) //nos permitirá usar pipes para todos los controllers de la aplicación
 export class CarsController {
   constructor(private readonly carsService: CarsService) {}
 
