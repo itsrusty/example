@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 
 @Controller('cars')
 // @UsePipes( ValidationPipe ) //nos permitirá usar pipes para todos los controllers de la aplicación
@@ -36,10 +37,10 @@ export class CarsController {
 
   @Patch(':id')
   updateCar(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: 400 })) id: number,
-    @Body() body: any,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateCarDto: UpdateCarDto,
   ) {
-    return body;
+    return this.carsService.update(id, updateCarDto);
   }
 
   @Delete(':id')
