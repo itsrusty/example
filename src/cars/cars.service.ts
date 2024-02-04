@@ -8,7 +8,7 @@ import { Car } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto, UpdateCarDto } from './dto';
 import { Data } from './dto/data.dto';
-import { Model, Schema, isValidObjectId } from 'mongoose';
+import { Model, isValidObjectId } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { DataS } from './entities/data.entitie';
 
@@ -130,4 +130,10 @@ export class CarsService {
       throw new InternalServerErrorException(`can't create data, so sorry`);
     }
   }
+
+  // async deleteData(id: string) {
+  //   try {
+  //     const deletedData = await this.dataModel.deleteOne(id);
+  //   } catch (error) {}
+  // }
 }

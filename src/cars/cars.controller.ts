@@ -60,4 +60,9 @@ export class CarsController {
   search(@Param('userId') userId: string) {
     return this.carsService.findDataDB(userId);
   }
+
+  // @Delete(':id')
+  // deleteUser(@Param('id') id: string) {
+  //   return this.carsService.deleteData(id);
+  // }
 }
