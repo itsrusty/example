@@ -27,10 +27,10 @@ export class CarsController {
     return this.carsService.findAll();
   }
 
-  @Get(':id')
-  getCarById(@Param('id', ParseUUIDPipe) id: string) {
-    return this.carsService.findOneById(id);
-  }
+  // @Get(':id')
+  // getCarById(@Param('id', ParseUUIDPipe) id: string) {
+  //   return this.carsService.findOneById(id);
+  // }
 
   @Post()
   createCar(@Body() createCarDto: CreateCarDto) {
@@ -54,5 +54,10 @@ export class CarsController {
   @HttpCode(HttpStatus.OK)
   createDb(@Body() data: Data) {
     return this.carsService.createInDB(data);
+  }
+
+  @Get(':userId')
+  search(@Param('userId') userId: string) {
+    return this.carsService.findDataDB(userId);
   }
 }

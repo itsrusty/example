@@ -8,7 +8,7 @@ import { Car } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto, UpdateCarDto } from './dto';
 import { Data } from './dto/data.dto';
-import { Model, Schema } from 'mongoose';
+import { Model, Schema, isValidObjectId } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { DataS } from './entities/data.entitie';
 
@@ -101,6 +101,31 @@ export class CarsService {
           `data sender exists in db ${JSON.stringify(error.keyValue)}`,
         );
       }
+      console.log(error);
+      throw new InternalServerErrorException(`can't create data, so sorry`);
+    }
+  }
+
+  async findDataDB(userId: string) {
+    try {
+      let User: DataS;
+
+      if (!isNaN(+userId)) {
+        User = await this.dataModel.findOne({ no: userId });
+        console.log(User);
+      }
+
+      if (isValidObjectId(userId)) User = await this.dataModel.findById(userId);
+
+      if (!User)
+        User = await this.dataModel.findOne({
+          name: userId.toLocaleLowerCase().trim(),
+        });
+
+      if (!User) throw new NotFoundException('no encontrado');
+
+      return User;
+    } catch (error) {
       console.log(error);
       throw new InternalServerErrorException(`can't create data, so sorry`);
     }
